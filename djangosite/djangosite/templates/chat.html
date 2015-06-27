@@ -5,13 +5,31 @@
     <title>Chat</title>
     <script type="text/javascript">
         user = "{{ user }}";
+        group_id = "{{ group }}";
     </script>
+    <script src="https://cdn.respoke.io/respoke.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/static/main.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
-
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600italic,600,400italic,700italic,800,800italic,300,300italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<h1>Chat page</h1>
+<div id="header">
+    <h1>Placeholder</h1>
+</div>
+<div id="container">
+    <div id="chat">
+        <div id="messages">test messages</div>
+        <div id="chatbox">
+        <form id="chat-form" class="form-wrapper">
+        <input type="text" placeholder="Type here to chat..." required="">
+        <button type="submit">SEND</button>
+        </form>
+        </div>
+    </div>
+    <div id="recommendations">
+    </div>
+    <div id="tags">Test tags</div>
+</div>
 </body>
 </html>
