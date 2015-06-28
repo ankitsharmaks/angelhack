@@ -1,4 +1,8 @@
 
+function updateMessages() {
+    var d = $('#messages');
+    d.scrollTop(d.prop("scrollHeight"));
+}
 $(document).ready(function() {
     var appid = "cd39e41d-8f45-4406-8218-e7f74ffae2f9";
     var endpointId = user;
@@ -30,6 +34,7 @@ $(document).ready(function() {
                 $("#messages").append(
                     ""+evt.message.endpointId+": " + evt.message.message + "<br>"
                 );
+                updateMessages();
             }
         });
     });
@@ -47,6 +52,17 @@ $(document).ready(function() {
         $("#messages").append(
             ""+ endpointId+": "+ groupMsg + "<br>"
         );
+        updateMessages();
+
+        $.ajax({
+            type: "POST",
+            url: "/message",
+            data: {
+                message: groupMsg,
+                user: user,
+                group: group_id
+            }
+        });
         return false;
     });
 });

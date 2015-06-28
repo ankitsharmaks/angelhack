@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 
 def index(request):
@@ -16,3 +17,11 @@ def chat(request):
         request.session['user'] = user_param
         return render(request, 'chat.html', {'user' : user_param, 'group' : group_param})
     return HttpResponseNotFound('<h1>Page not found</h1>')
+
+@csrf_exempt
+def message(request):
+    if request.method == 'POST':
+        print(request.POST['message'])
+        print(request.POST['user'])
+        print(request.POST['group'])
+    return HttpResponse('Okay!')
