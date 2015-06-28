@@ -89,7 +89,11 @@ def recommendations(request):
 
         tags = group.tag_set.all()
         tag_list = sorted([[tag.name, tag.score] for tag in tags], reverse=True)
-        tagsWithCount = getCountForTags(tag_list)
+
+        if len(tag_list) != 0:
+            tagsWithCount = getCountForTags(tag_list)
+        else:
+            return HttpResponse("[]")
 
         print "Tags with count:"
         print tagsWithCount
@@ -99,8 +103,6 @@ def recommendations(request):
             totalResponse += get_recommendations(tagWithCount, coordinates)
         json_output = json.dumps(totalResponse)
         return HttpResponse(json_output)
-
-    return HttpResponse('Okay!')
 
 def get_recommendations(tagWithCount, coordinates):
     print tagWithCount
