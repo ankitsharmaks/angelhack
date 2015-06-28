@@ -14,17 +14,24 @@ def extractTagsWithScore(inputMsg):
 	call_results = json.loads(r.text)
 
 	tags_lst_canon = []
-	#separates out negative sentiment
-	if call_results['positive'] or call_results['aggregate']['score'] > 0:
+	#handles positive sentiment
+	if call_results['positive']:
 		for keys in call_results['positive']:
 			list_of_topics = keys['topic'].split(" ")
 			for item in list_of_topics:
 				tags_lst_canon.append([item.lower(), keys['score']])
+
+	#handles neutral sentiment
+	elif call_results['aggregate']['score'] == 0:
+		tags_lst_neutral = inputStr[:-1].split("+")
+		for item in tags_lst_neutral:
+			tags_lst_canon.append([item.lower(), '0.01'])
+		print tags_lst_canon
+	
+	#disregards negative sentiment
 	else:
-		print "Nothing to recommend."
+		pass
 
-
-	#food_lst_canon = ["chinese", "indian", "afghani", "dumplings", "congee", "bubbletea", "doughnuts", "sandwiches"]
 	food_lst_canon =['afghan',
 	'algerian',
 	'american',
@@ -84,6 +91,7 @@ def extractTagsWithScore(inputMsg):
 	'greek',
 	'grocery',
 	'guatemalan',
+	'happy hour',
 	'hawker centre',
 	'health markets',
 	'herbs & spices',
@@ -193,8 +201,8 @@ def extractTagsWithScore(inputMsg):
 	return tags_output
 
 # testing
-# message = "I like angolan"
-# extractTagsWithScore(message)
+message = "I hate angolan"
+extractTagsWithScore(message)
 
 	
 
