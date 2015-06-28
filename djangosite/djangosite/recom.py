@@ -47,19 +47,17 @@ def yelp_search(searchQuery, location, locationCoord):
 
 def findNeighbourhood(coordinatePairString):
     geolocator = Nominatim()
-    location = geolocator.reverse(centroidOfCoordsString)
+    location = geolocator.reverse(coordinatePairString)
     location_neighbouhood = location.raw.get('address').get('neighbourhood')
     return location_neighbouhood
 
-# listOfTags = ["good", "chinese"]
-listOfTags = ["tacos"]
-listOfCoordsString = ["47.649826,-122.350708", "47.627434, -122.342953", "47.655832, -122.305960"]
+def test():
+    listOfTags = ["tacos"]
+    listOfCoordsString = ["47.649826,-122.350708", "47.627434, -122.342953", "47.655832, -122.305960"]
+    print fetch_recommendation(listOfTags, listOfCoordsString)
 
-centroidOfCoordsString = findCentroid(listOfCoordsString)
-centroidLocation = findNeighbourhood(centroidOfCoordsString)
-print centroidLocation
-
-result = recommend(listOfTags, centroidLocation, centroidOfCoordsString)
-
-print result
-
+def fetch_recommendation(listOfTags, listOfCoords):
+    centroidOfCoords = findCentroid(listOfCoords)
+    centroidLocation = findNeighbourhood(centroidOfCoords)
+    result = recommend(listOfTags, centroidLocation, centroidOfCoords)
+    return result

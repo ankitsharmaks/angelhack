@@ -5,6 +5,7 @@ from models import *
 import tags_extraction
 import json
 import datetime
+import recom
 
 def store_tag(group_name, tag_str, score):
     group, created = Group.objects.get_or_create(name = group_name)
@@ -88,5 +89,5 @@ def recommendations(request):
 def get_recommendations(tags, coordinates):
     print tags
     print coordinates
-    return '[]'
+    return recom.fetch_recommendation(tags, coordinates)
 
