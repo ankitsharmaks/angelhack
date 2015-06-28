@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from models import *
+import tags_extraction
 import json
 import datetime
 
@@ -66,7 +67,7 @@ def message(request):
     return HttpResponse('Okay!')
 
 def getTagsWithScore(message):
-    return [['indian',1.5],['cheap',0.5],['chinese',2.5]]
+    return tags_extraction.extractTagsWithScore(message)
 
 @csrf_exempt
 def recommendations(request):
@@ -83,8 +84,6 @@ def recommendations(request):
         tag_list = sorted([[tag.score, tag.name] for tag in tags])
         print get_recommendations([tag_list[-1][1]], coordinates)
     return HttpResponse('Okay!')
-
-
 
 def get_recommendations(tags, coordinates):
     print tags
