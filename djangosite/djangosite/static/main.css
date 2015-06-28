@@ -208,3 +208,7 @@ h1 {
 #recommendations-label {
     width: 300px;
 }
+
+.user-name {
+    font-weight: bold;
+}

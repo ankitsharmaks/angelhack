@@ -98,7 +98,7 @@ $(document).ready(function() {
             },
             onMessage: function(evt) {
                 $("#messages").append(
-                    ""+evt.message.endpointId+": " + evt.message.message + "<br>"
+                    '<span class="user-name">'+evt.message.endpointId+"</span>: " + evt.message.message + "<br>"
                 );
                 updateMessages();
                 updateTags();
@@ -118,7 +118,7 @@ $(document).ready(function() {
             message: groupMsg
         });
         $("#messages").append(
-            ""+ endpointId+": "+ groupMsg + "<br>"
+            '<span class="user-name">'+ endpointId+"</span>: "+ groupMsg + "<br>"
         );
         updateMessages();
 
