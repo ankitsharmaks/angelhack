@@ -17,6 +17,8 @@ def store_tag(group_name, tag_str, score):
     for tag_model in tags:
         if tag_model.name == tag_str:
             found = True
+            if type(score) is str:
+                score = float(score)
             tag_model.score += score
             tag_model.save()
     if not found:
