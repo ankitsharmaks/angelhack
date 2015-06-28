@@ -5,7 +5,15 @@ function updateMessages() {
 }
 
 function updateTags() {
-    $.get()
+    $.getJSON('/tags?group=' + group_id,
+        function(data,status) {
+            var $tags = $('#tags');
+            $tags.html('');
+            $.each(data, function(index, entry){
+                $tags.append('<span class="tag">' + entry + '</span> ');
+                console.log(entry);
+            });
+        });
 }
 
 $(document).ready(function() {
@@ -40,6 +48,7 @@ $(document).ready(function() {
                     ""+evt.message.endpointId+": " + evt.message.message + "<br>"
                 );
                 updateMessages();
+                updateTags();
             }
         });
     });
@@ -66,7 +75,10 @@ $(document).ready(function() {
                 message: groupMsg,
                 user: user,
                 group: group_id
-            }
+            },
+            success: function (){
+                updateTags();
+            },
         });
         return false;
     });

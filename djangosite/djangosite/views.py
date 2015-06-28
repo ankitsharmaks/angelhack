@@ -54,4 +54,5 @@ def message(request):
         print(request.POST['user'])
         print(request.POST['group'])
         store_tag(request.POST['group'], 'chinese', 1.0)
+        store_tag(request.POST['group'], 'italian', 1.0)
     return HttpResponse('Okay!')
