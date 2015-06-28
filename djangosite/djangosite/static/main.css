@@ -17,6 +17,13 @@ body {
     overflow: auto;
     position:relative;
     z-index: 3;
+    text-align: center;
+}
+
+#header img {
+    height: 60px;
+    text-align: center;
+    margin-top: 4px;
 }
 
 #header h1 {
@@ -30,7 +37,6 @@ body {
 #container {
     width: 1000px;
     margin: 0 auto;
-    margin-top: 100px;
     overflow: none;
 }
 
@@ -193,4 +199,12 @@ h1 {
     padding: 3px;
     display: inline-block;
     margin-top: 10px;
+}
+
+#chat-label {
+    width: 600px;
+}
+
+#recommendations-label {
+    width: 300px;
 }

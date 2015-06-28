@@ -81,7 +81,10 @@ def recommendations(request):
             coordinates.append(user.location)
         tags = group.tag_set.all()
         tag_list = sorted([[tag.score, tag.name] for tag in tags])
-        return HttpResponse(get_recommendations([tag_list[-1][1]], coordinates))
+        if len(tag_list) > 0:
+            return HttpResponse(get_recommendations([tag_list[-1][1]], coordinates))
+        else:
+            return HttpResponse('[]')
     return HttpResponse('Okay!')
 
 
