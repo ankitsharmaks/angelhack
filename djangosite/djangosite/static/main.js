@@ -102,7 +102,7 @@ $(document).ready(function() {
                 );
                 updateMessages();
                 updateTags();
-                updateRecommendations();
+                setTimeout(updateRecommendations, 1000);
             }
         });
     });
