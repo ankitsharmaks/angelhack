@@ -53,5 +53,10 @@ def message(request):
         print(request.POST['message'])
         print(request.POST['user'])
         print(request.POST['group'])
-        store_tag(request.POST['group'], 'chinese', 1.0)
+        tagsWithScore = getTagsWithScore(request.POST['message'])
+        for tagWithScore in tagsWithScore:
+            store_tag(request.POST['group'], tagWithScore[0], tagWithScore[1])
     return HttpResponse('Okay!')
+
+def getTagsWithScore(message):
+    return [['indian',1.5],['cheap',0.5],['chinese',2.5]]
