@@ -120,7 +120,26 @@ function updateRecommendations() {
         });
 }
 
+function do_resize() {
+    new_width = $(window).width();
+    max_width = 1000;
+    if (new_width > max_width) {
+        new_width = max_width;
+    }
+    $("#container").css('width', new_width);
+    $("#chat").css('width', new_width - 300);
+    $("#messages").css('width', new_width - 320);
+    $("#tags").css('width', new_width - 20);
+    $(".form-wrapper input").css('width', new_width - 420);
+}
+
 $(document).ready(function() {
+    $(window).resize(function() {
+        do_resize();
+    });
+    do_resize();
+
+
     var appid = "cd39e41d-8f45-4406-8218-e7f74ffae2f9";
     var endpointId = user;
     var group;
@@ -152,7 +171,7 @@ $(document).ready(function() {
                     '<span class="user-name">'+evt.message.endpointId+"</span>: " + evt.message.message + "<br>"
                 );
                 updateMessages();
-                updateTags();
+                setTimeout(updateTags, 1000);
                 setTimeout(updateRecommendations, 1000);
             }
         });
