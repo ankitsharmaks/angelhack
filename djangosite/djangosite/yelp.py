@@ -77,7 +77,7 @@ def request(host, path, url_params=None):
 
     return response
 
-def search(term, location, cll="47.627183,-122.342968"):
+def search(term,searchCount, location, cll="47.627183,-122.342968"):
     """Query the Search API by a search term and location.
 
     Args:
@@ -87,13 +87,13 @@ def search(term, location, cll="47.627183,-122.342968"):
     Returns:
         dict: The JSON response from the request.
     """
-    
     url_params = {
         'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
-        'limit': SEARCH_LIMIT,
+        'limit': searchCount,
         'cll': cll
     }
+    print '---YelpUrl:', url_params
     return request(API_HOST, SEARCH_PATH, url_params=url_params)
 
 def get_business(business_id):

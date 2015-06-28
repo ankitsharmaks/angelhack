@@ -3,11 +3,12 @@ from yelp import search
 from geopy.geocoders import Nominatim
 
 
-def recommend(listOfTags, location, locationCoord=None):
+def recommend(tagWithCount, location, locationCoord=None):
     listOfHits = []
-
-    searchQuery = compileQuery(listOfTags)
-    yelp_response = yelp_search(searchQuery, location, locationCoord)
+    tagName = tagWithCount[0]
+    searchCount = tagWithCount[1]
+    searchQuery = compileQuery(tagName)
+    yelp_response = yelp_search(searchQuery, searchCount, location, locationCoord)
     businesses = yelp_response.get('businesses')
 
     for entry in businesses:
@@ -21,15 +22,11 @@ def recommend(listOfTags, location, locationCoord=None):
                   'yelp_url': yelp_url, 'rating': rating}
         listOfHits.append(entryDump)
 
-    json_output = json.dumps(listOfHits)
-    return json_output
+    return listOfHits
 
 
-def compileQuery(listOfTags):
-    searchQuery = ""
-    for tag in listOfTags:
-        searchQuery += tag + " "
-    return searchQuery.rstrip()
+def compileQuery(tagname):
+    return tagname.rstrip()
 
 def findCentroid(listOfFloatPairStrings):
     sumLat = 0
@@ -42,8 +39,8 @@ def findCentroid(listOfFloatPairStrings):
     return str(centroidLat)+","+str(centroidLong)
 
 
-def yelp_search(searchQuery, location, locationCoord):
-    return search(searchQuery, location, locationCoord)
+def yelp_search(searchQuery, searchCount,location, locationCoord):
+    return search(searchQuery,searchCount, location, locationCoord)
 
 def findNeighbourhood(coordinatePairString):
     geolocator = Nominatim()
@@ -56,8 +53,8 @@ def test():
     listOfCoordsString = ["47.649826,-122.350708", "47.627434, -122.342953", "47.655832, -122.305960"]
     print fetch_recommendation(listOfTags, listOfCoordsString)
 
-def fetch_recommendation(listOfTags, listOfCoords):
+def fetch_recommendation(tagWithCount, listOfCoords):
     centroidOfCoords = findCentroid(listOfCoords)
     centroidLocation = findNeighbourhood(centroidOfCoords)
-    result = recommend(listOfTags, centroidLocation, centroidOfCoords)
+    result = recommend(tagWithCount, centroidLocation, centroidOfCoords)
     return result
