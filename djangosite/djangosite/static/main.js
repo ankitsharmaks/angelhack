@@ -3,6 +3,11 @@ function updateMessages() {
     var d = $('#messages');
     d.scrollTop(d.prop("scrollHeight"));
 }
+
+function updateTags() {
+    $.get()
+}
+
 $(document).ready(function() {
     var appid = "cd39e41d-8f45-4406-8218-e7f74ffae2f9";
     var endpointId = user;

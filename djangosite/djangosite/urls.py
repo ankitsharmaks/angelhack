@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index),
     url(r'^chat$', views.chat),
-    url(r'^message$', views.message)
+    url(r'^message$', views.message),
+    url(r'^tags$', views.tags)
 ]
