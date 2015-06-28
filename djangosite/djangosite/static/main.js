@@ -35,6 +35,9 @@ function updateRecommendations() {
         function(data,status) {
             index = 0;
             $(".entry").each(function(index) {
+                if (index >= data.length) {
+                    return;
+                }
                 cur_data = data[index];
                 $(this).css({
                     'border-left' : '10px solid ' + colors[index % 4],
