@@ -77,7 +77,7 @@ def request(host, path, url_params=None):
 
     return response
 
-def search(term,searchCount, location, cll="47.627183,-122.342968"):
+def search(term, searchCount, location, cll="47.627183,-122.342968"):
     """Query the Search API by a search term and location.
 
     Args:

@@ -78,20 +78,28 @@ def recommendations(request):
     if request.method == 'GET':
         group_param = request.GET['group']
         group, created = Group.objects.get_or_create(name = group_param)
+
         if created:
             group.save()
         users = group.user_set.all()
         coordinates = []
+
         for user in users:
             coordinates.append(user.location)
+
         tags = group.tag_set.all()
         tag_list = sorted([[tag.name, tag.score] for tag in tags], reverse=True)
         tagsWithCount = getCountForTags(tag_list)
+
+        print "Tags with count:"
+        print tagsWithCount
+
         totalResponse = []
         for tagWithCount in tagsWithCount:
-            totalResponse.append(get_recommendations(tagWithCount, coordinates))
-        json_output = json.dumps(totalResponse[0])
+            totalResponse += get_recommendations(tagWithCount, coordinates)
+        json_output = json.dumps(totalResponse)
         return HttpResponse(json_output)
+
     return HttpResponse('Okay!')
 
 def get_recommendations(tagWithCount, coordinates):

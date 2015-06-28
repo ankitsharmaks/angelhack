@@ -1,4 +1,5 @@
 import json
+import time
 from yelp import search
 from geopy.geocoders import Nominatim
 
@@ -49,12 +50,17 @@ def findNeighbourhood(coordinatePairString):
     return location_neighbouhood
 
 def test():
-    listOfTags = ["tacos"]
+    listOfTags = ["indian", 4.0]
     listOfCoordsString = ["47.649826,-122.350708", "47.627434, -122.342953", "47.655832, -122.305960"]
-    print fetch_recommendation(listOfTags, listOfCoordsString)
+    start = time.time()
+    output = fetch_recommendation(listOfTags, listOfCoordsString)
+    end = time.time()
+    print end - start
+    print output
 
 def fetch_recommendation(tagWithCount, listOfCoords):
     centroidOfCoords = findCentroid(listOfCoords)
     centroidLocation = findNeighbourhood(centroidOfCoords)
     result = recommend(tagWithCount, centroidLocation, centroidOfCoords)
     return result
+
