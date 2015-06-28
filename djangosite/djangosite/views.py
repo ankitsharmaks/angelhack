@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from models import *
+from TagRank import getCountForTags
 import tags_extraction
 import json
 import datetime
@@ -82,11 +83,16 @@ def recommendations(request):
         for user in users:
             coordinates.append(user.location)
         tags = group.tag_set.all()
-        tag_list = sorted([[tag.score, tag.name] for tag in tags])
-        return HttpResponse(get_recommendations([tag_list[-1][1]], coordinates))
+        tag_list = sorted([[tag.name, tag.score] for tag in tags], reverse=True)
+        tagsWithCount = getCountForTags(tag_list)
+        totalResponse = []
+        for tagWithCount in tagsWithCount:
+            totalResponse.append(get_recommendations(tagWithCount, coordinates))
+        json_output = json.dumps(totalResponse[0])
+        return HttpResponse(json_output)
     return HttpResponse('Okay!')
 
-def get_recommendations(tags, coordinates):
-    print tags
+def get_recommendations(tagWithCount, coordinates):
+    print tagWithCount
     print coordinates
-    return recom.fetch_recommendation(tags, coordinates)
+    return recom.fetch_recommendation(tagWithCount, coordinates)
