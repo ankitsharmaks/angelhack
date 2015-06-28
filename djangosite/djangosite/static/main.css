@@ -86,6 +86,11 @@ div#recommendations {
     overflow: hidden;
 }
 
+#recommendations div.entry-abs {
+    position: absolute;
+    left: 0px;
+}
+
 #recommendations div.spacer {
     padding: 0;
     height: 1px;

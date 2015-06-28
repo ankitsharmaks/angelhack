@@ -29,11 +29,62 @@ function updateTags() {
         });
 }
 
+var cur_z_index = 1;
 
 function updateRecommendations() {
     $.getJSON('/recommendations?group=' + group_id,
         function(data,status) {
             index = 0;
+            var $items_to_delete = $('.entry-abs');
+            var $recommendations = $('#recommendations');
+            for (var i = 0; i < 6; i++) {
+                var $new_entry = $('<div class="entry entry-abs"></div>');
+
+                if (index >= data.length) {
+                    break;
+                }
+                cur_data = data[index];
+                $new_entry.css({
+                    'border-left' : '10px solid ' + colors[index % 4],
+                    'background' : 'white',
+                    'cursor' : 'pointer',
+                    'top' : (100 * i + 1) + 'px',
+                    'opacity' : '0',
+                    'z-index' : cur_z_index
+                });
+                //New scope
+                (function() {
+                    var url = cur_data['yelp_url'];
+                    $new_entry.click(function() {
+                        window.open(url,'_blank');
+                    });
+                }());
+                output = '<img class="sample" src="' + cur_data['image_url'] + '"/>';
+                output += '<div class="rest-wrap">';
+                output += '<div class="name">' + cur_data['name'] + '</div>';
+                categories = cur_data['categories'];
+                categories_output = "";
+                $.each(categories, function(index, element) {
+                    categories_output += element[0];
+                    if (index != categories.length - 1) {
+                        categories_output += ', ';
+                    }
+                });
+
+                output += '<div class="categories">' + categories_output + '</div>';
+                output += '</div>';
+                $new_entry.html(output);
+
+                $recommendations.append($new_entry);
+                $new_entry.fadeTo(500, 1);
+
+                index++;
+            }
+            setTimeout(500, function() {
+                $items_to_delete.remove();
+            });
+            cur_z_index++;
+            /*
             $(".entry").each(function(index) {
                 if (index >= data.length) {
                     return;
@@ -65,7 +116,7 @@ function updateRecommendations() {
                 output += '</div>';
                 $(this).html(output);
                 index++;
-            });
+            });*/
         });
 }
 
