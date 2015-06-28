@@ -96,3 +96,4 @@ def get_recommendations(tagWithCount, coordinates):
     print tagWithCount
     print coordinates
     return recom.fetch_recommendation(tagWithCount, coordinates)
+
