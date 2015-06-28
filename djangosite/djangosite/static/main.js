@@ -62,6 +62,7 @@ function updateRecommendations() {
                 output = '<img class="sample" src="' + cur_data['image_url'] + '"/>';
                 output += '<div class="rest-wrap">';
                 output += '<div class="name">' + cur_data['name'] + '</div>';
+                output += '<div class="rating">Rating: <b>' + cur_data['rating'] + '/5</b></div>';
                 categories = cur_data['categories'];
                 categories_output = "";
                 $.each(categories, function(index, element) {
@@ -84,39 +85,6 @@ function updateRecommendations() {
                 $items_to_delete.remove();
             });
             cur_z_index++;
-            /*
-            $(".entry").each(function(index) {
-                if (index >= data.length) {
-                    return;
-                }
-                cur_data = data[index];
-                $(this).css({
-                    'border-left' : '10px solid ' + colors[index % 4],
-                    'background' : 'white',
-                    'cursor' : 'pointer'
-                });
-                $(this).unbind();
-                var url = cur_data['yelp_url'];
-                $(this).click(function() {
-                    window.open(url,'_blank');
-                });
-                output = '<img class="sample" src="' + cur_data['image_url'] + '"/>';
-                output += '<div class="rest-wrap">';
-                output += '<div class="name">' + cur_data['name'] + '</div>';
-                categories = cur_data['categories'];
-                categories_output = "";
-                $.each(categories, function(index, element) {
-                    categories_output += element[0];
-                    if (index != categories.length - 1) {
-                        categories_output += ', ';
-                    }
-                });
-
-                output += '<div class="categories">' + categories_output + '</div>';
-                output += '</div>';
-                $(this).html(output);
-                index++;
-            });*/
         });
 }
 

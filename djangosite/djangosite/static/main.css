@@ -191,6 +191,11 @@ h1 {
     color: #888;
 }
 
+#container .entry div.rating {
+    font-size: 14px;
+    color: #555;
+}
+
 .rest-wrap {
     position: relative;
     top: 50%;
