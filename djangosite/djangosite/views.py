@@ -2,8 +2,10 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from models import *
+import tags_extraction
 import json
 import datetime
+import recom
 
 def store_tag(group_name, tag_str, score):
     group, created = Group.objects.get_or_create(name = group_name)
@@ -66,7 +68,7 @@ def message(request):
     return HttpResponse('Okay!')
 
 def getTagsWithScore(message):
-    return [['indian',1.5],['cheap',0.5],['chinese',2.5]]
+    return tags_extraction.extractTagsWithScore(message)
 
 @csrf_exempt
 def recommendations(request):
@@ -84,10 +86,7 @@ def recommendations(request):
         return HttpResponse(get_recommendations([tag_list[-1][1]], coordinates))
     return HttpResponse('Okay!')
 
-
-
 def get_recommendations(tags, coordinates):
     print tags
     print coordinates
-    return '[{"rating": 4.5, "name": "14 Carrot Taco Stand", "business_id": "14-carrot-taco-stand-seattle", "image_url": "http://s3-media3.fl.yelpcdn.com/bphoto/zdMx1mpcAttXklY-_dmcDA/ms.jpg", "yelp_url": "http://www.yelp.com/biz/14-carrot-taco-stand-seattle", "categories": [["Food Stands", "foodstands"], ["Mexican", "mexican"]]}, {"rating": 3.0, "name": "Little Water Cantina", "business_id": "little-water-cantina-seattle", "image_url": "http://s3-media4.fl.yelpcdn.com/bphoto/ZFZd-5Hsgr4hVZ9IWfAiKw/ms.jpg", "yelp_url": "http://www.yelp.com/biz/little-water-cantina-seattle", "categories": [["Mexican", "mexican"]]}, {"rating": 4.5, "name": "Tacos Chukis", "business_id": "tacos-chukis-seattle", "image_url": "http://s3-media3.fl.yelpcdn.com/bphoto/qxFr4q5vKzct8XxBxNTawQ/ms.jpg", "yelp_url": "http://www.yelp.com/biz/tacos-chukis-seattle", "categories": [["Mexican", "mexican"]]}, {"rating": 4.0, "name": "Mezcaleria Oaxaca", "business_id": "mezcaleria-oaxaca-seattle", "image_url": "http://s3-media4.fl.yelpcdn.com/bphoto/e3kRkjjPnrgE4dxCsdAngw/ms.jpg", "yelp_url": "http://www.yelp.com/biz/mezcaleria-oaxaca-seattle", "categories": [["Mexican", "mexican"]]}, {"rating": 4.0, "name": "Guanaco\'s Tacos Pupuseria", "business_id": "guanacos-tacos-pupuseria-seattle", "image_url": "http://s3-media3.fl.yelpcdn.com/bphoto/l01yTX3uvTfH98qOjwU9GA/ms.jpg", "yelp_url": "http://www.yelp.com/biz/guanacos-tacos-pupuseria-seattle", "categories": [["Mexican", "mexican"], ["Salvadoran", "salvadoran"]]}, {"rating": 4.0, "name": "Red Star Taco Bar", "business_id": "red-star-taco-bar-seattle", "image_url": "http://s3-media3.fl.yelpcdn.com/bphoto/LjCGPYa_Wd4Wcj_08HAg4g/ms.jpg", "yelp_url": "http://www.yelp.com/biz/red-star-taco-bar-seattle", "categories": [["Mexican", "mexican"]]}]'
-
+    return recom.fetch_recommendation(tags, coordinates)
