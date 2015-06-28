@@ -60,3 +60,6 @@ def message(request):
 
 def getTagsWithScore(message):
     return [['indian',1.5],['cheap',0.5],['chinese',2.5]]
+
+#def get_recommendations(tags, coordinates):
+
