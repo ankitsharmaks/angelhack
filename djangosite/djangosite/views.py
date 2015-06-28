@@ -30,8 +30,15 @@ def index(request):
 def chat(request):
     user_param = request.GET['user']
     group_param = request.GET['group']
-    if request.method == 'GET' and user_param and group_param:
+    location_param = request.GET['location']
+    if request.method == 'GET' and user_param and group_param and location_param:
         request.session['user'] = user_param
+        group, created = Group.objects.get_or_create(name = group_param)
+        if created:
+            group.save()
+        user, created = User.objects.get_or_create(name=user_param, location=location_param, group=group)
+        if created:
+            user.save()
         return render(request, 'chat.html', {'user' : user_param, 'group' : group_param})
     return HttpResponseNotFound('<h1>Page not found</h1>')
 
@@ -61,5 +68,26 @@ def message(request):
 def getTagsWithScore(message):
     return [['indian',1.5],['cheap',0.5],['chinese',2.5]]
 
-#def get_recommendations(tags, coordinates):
+@csrf_exempt
+def recommendations(request):
+    if request.method == 'GET':
+        group_param = request.GET['group']
+        group, created = Group.objects.get_or_create(name = group_param)
+        if created:
+            group.save()
+        users = group.user_set.all()
+        coordinates = []
+        for user in users:
+            coordinates.append(user.location)
+        tags = group.tag_set.all()
+        tag_list = sorted([[tag.score, tag.name] for tag in tags])
+        print get_recommendations([tag_list[-1][1]], coordinates)
+    return HttpResponse('Okay!')
+
+
+
+def get_recommendations(tags, coordinates):
+    print tags
+    print coordinates
+    return '[]'
 

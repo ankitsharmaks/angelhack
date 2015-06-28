@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^chat$', views.chat),
     url(r'^message$', views.message),
-    url(r'^tags$', views.tags)
+    url(r'^tags$', views.tags),
+    url(r'^recommendations$', views.recommendations)
 ]

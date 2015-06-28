@@ -16,6 +16,13 @@ function updateTags() {
         });
 }
 
+function updateRecommendations() {
+    $.getJSON('/recommendations?group=' + group_id,
+        function(data,status) {
+            console.log(data);
+        });
+}
+
 $(document).ready(function() {
     var appid = "cd39e41d-8f45-4406-8218-e7f74ffae2f9";
     var endpointId = user;
@@ -49,6 +56,7 @@ $(document).ready(function() {
                 );
                 updateMessages();
                 updateTags();
+                updateRecommendations();
             }
         });
     });
@@ -78,6 +86,7 @@ $(document).ready(function() {
             },
             success: function (){
                 updateTags();
+                updateRecommendations();
             },
         });
         return false;
