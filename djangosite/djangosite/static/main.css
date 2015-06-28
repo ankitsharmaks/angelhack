@@ -89,9 +89,10 @@ div#recommendations {
 
 #tags {
     width: 980px;
-    background: #bbb;
+    background: #ddd;
     height: 50px;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    text-align:center;
 }
 
 
@@ -169,7 +170,27 @@ h1 {
 }
 
 #container .entry div {
+    text-align: center;
     padding: 0;
-    margin: 0;
     width: 190px;
+}
+
+#container .entry div.categories {
+    font-size: 13px;
+    color: #888;
+}
+
+.rest-wrap {
+    position: relative;
+    top: 50%;
+    transform: translateY(-55%);
+}
+
+.tag {
+    margin: 2px;
+    border-radius: 3px;
+    color: white;
+    padding: 3px;
+    display: inline-block;
+    margin-top: 10px;
 }

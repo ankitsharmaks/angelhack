@@ -4,24 +4,31 @@ function updateMessages() {
     d.scrollTop(d.prop("scrollHeight"));
 }
 
-function updateTags() {
-    $.getJSON('/tags?group=' + group_id,
-        function(data,status) {
-            var $tags = $('#tags');
-            $tags.html('');
-            $.each(data, function(index, entry){
-                $tags.append('<span class="tag">' + entry + '</span> ');
-                console.log(entry);
-            });
-        });
-}
-
 colors = [
     '#f44336',
     '#03a9f4',
     '#4caf50',
     '#ff9800'
 ];
+
+function updateTags() {
+    $.getJSON('/tags?group=' + group_id,
+        function(data,status) {
+            var $tags = $('#tags');
+            $tags.html('');
+            index = 0;
+            $.each(data, function(index, entry){
+                $span = $('<span class="tag">' + entry + '</span> ')
+                $tags.append($span);
+                $span.css({
+                    'background' : colors[index % 4],
+                });
+                index += 1;
+                console.log(entry);
+            });
+        });
+}
+
 
 function updateRecommendations() {
     $.getJSON('/recommendations?group=' + group_id,
@@ -31,9 +38,16 @@ function updateRecommendations() {
                 cur_data = data[index];
                 $(this).css({
                     'border-left' : '10px solid ' + colors[index % 4],
-                    'background' : 'white'
+                    'background' : 'white',
+                    'cursor' : 'pointer'
+                });
+                $(this).unbind();
+                var url = cur_data['yelp_url'];
+                $(this).click(function() {
+                    window.open(url,'_blank');
                 });
                 output = '<img class="sample" src="' + cur_data['image_url'] + '"/>';
+                output += '<div class="rest-wrap">';
                 output += '<div class="name">' + cur_data['name'] + '</div>';
                 categories = cur_data['categories'];
                 categories_output = "";
@@ -45,6 +59,7 @@ function updateRecommendations() {
                 });
 
                 output += '<div class="categories">' + categories_output + '</div>';
+                output += '</div>';
                 $(this).html(output);
                 index++;
             });
