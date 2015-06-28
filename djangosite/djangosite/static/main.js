@@ -16,10 +16,38 @@ function updateTags() {
         });
 }
 
+colors = [
+    '#f44336',
+    '#03a9f4',
+    '#4caf50',
+    '#ff9800'
+];
+
 function updateRecommendations() {
     $.getJSON('/recommendations?group=' + group_id,
         function(data,status) {
-            console.log(data);
+            index = 0;
+            $(".entry").each(function(index) {
+                cur_data = data[index];
+                $(this).css({
+                    'border-left' : '10px solid ' + colors[index % 4],
+                    'background' : 'white'
+                });
+                output = '<img class="sample" src="' + cur_data['image_url'] + '"/>';
+                output += '<div class="name">' + cur_data['name'] + '</div>';
+                categories = cur_data['categories'];
+                categories_output = "";
+                $.each(categories, function(index, element) {
+                    categories_output += element[0];
+                    if (index != categories.length - 1) {
+                        categories_output += ', ';
+                    }
+                });
+
+                output += '<div class="categories">' + categories_output + '</div>';
+                $(this).html(output);
+                index++;
+            });
         });
 }
 
